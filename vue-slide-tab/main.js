@@ -323,24 +323,22 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     this.tabWidth = this.containerWidth || this.$el.offsetWidth || window.innerWidth;
-    this.minLeft = (this.wrapperWidth - this.tabWidth) * -1;
-    var cur = this.current >= 0 && this.current < this.tabs.length ? this.current : 0;
-    this.cur = cur;
-    this.setLeftByIndex(cur);
+    var diff = this.wrapperWidth - this.tabWidth;
+    this.minLeft = diff > 0 ? diff * -1 : 0;
+    this.cur = this.current >= 0 && this.current < this.tabs.length ? this.current : 0;
+    this.setLeftByIndex(this.cur);
   },
   methods: {
     setLeftByIndex: function setLeftByIndex(index) {
-      // 被点击tab的中点向整个tab的中点靠拢
+      // move content's midpoint towards tab's midpoint
       var halfItem = this.itemWidth / 2;
       var halfTab = this.tabWidth / 2;
       var pos = halfItem + index * this.itemWidth;
       var left = pos - halfTab;
 
       if (left < 0) {
-        // 点击的item中点在tab中点的左侧时不用处理
         this.left = 0;
       } else if (left > Math.abs(this.minLeft)) {
-        // 超出可移动动的范围时不用处理
         this.left = this.minLeft;
       } else {
         this.left = left * -1;
