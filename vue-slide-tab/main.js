@@ -219,11 +219,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 
+vue__WEBPACK_IMPORTED_MODULE_0__["default"].use(_src_index__WEBPACK_IMPORTED_MODULE_1__["default"]); // Vue.component('VueSlideTab', VueSlideTab.component)
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "app",
-  components: {
-    VueSlideTab: _src_index__WEBPACK_IMPORTED_MODULE_1__["default"]
-  },
   data: function data() {
     return {
       cur: 4,
@@ -311,7 +310,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     tabStyle: function tabStyle() {
-      return "width: ".concat(this.tabWidth, "px;");
+      return this.tabWidth ? "width: ".concat(this.tabWidth, "px;") : '';
     },
     wrapperWidth: function wrapperWidth() {
       return this.tabs.length * this.itemWidth;
@@ -322,7 +321,7 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   mounted: function mounted() {
-    this.tabWidth = this.containerWidth || this.$el.offsetWidth || window.innerWidth;
+    this.tabWidth = this.containerWidth || this.$el.offsetWidth;
     var diff = this.wrapperWidth - this.tabWidth;
     this.minLeft = diff > 0 ? diff * -1 : 0;
     this.cur = this.current >= 0 && this.current < this.tabs.length ? this.current : 0;
@@ -399,7 +398,7 @@ exports.push([module.i, "body {\n  margin: 0;\n}\n#app {\n  font-family: \"Aveni
 
 exports = module.exports = __webpack_require__(/*! ../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js")(false);
 // Module
-exports.push([module.i, ".slide-tab {\n  overflow: hidden;\n}\n.slide-tab .tab-wrapper {\n  display: flex;\n}\n.slide-tab .tab-wrapper.motion {\n  transition: all 0.3s;\n}\n.slide-tab .tab-wrapper .tab-item {\n  box-sizing: border-box;\n  flex: 1;\n}\n", ""]);
+exports.push([module.i, ".slide-tab {\n  overflow: hidden;\n  width: 100%;\n}\n.slide-tab .tab-wrapper {\n  display: flex;\n}\n.slide-tab .tab-wrapper.motion {\n  transition: all 0.3s;\n}\n.slide-tab .tab-wrapper .tab-item {\n  box-sizing: border-box;\n  flex: 1;\n}\n", ""]);
 
 
 
@@ -1627,12 +1626,7 @@ var render = function() {
               }
             }
           },
-          [
-            _vm._t("tab", [_vm._v(_vm._s(tab.name))], {
-              tab: tab,
-              active: _vm.cur === index
-            })
-          ],
+          [_vm._t("tab", null, { tab: tab, active: _vm.cur === index })],
           2
         )
       }),
@@ -13856,7 +13850,17 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _VueSlideTab_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./VueSlideTab.vue */ "./src/VueSlideTab.vue");
 
-/* harmony default export */ __webpack_exports__["default"] = (_VueSlideTab_vue__WEBPACK_IMPORTED_MODULE_0__["default"]);
+
+function install(Vue) {
+  if (install.installed) return;
+  install.installed = true;
+  Vue.component('VueSlideTab', _VueSlideTab_vue__WEBPACK_IMPORTED_MODULE_0__["default"]);
+}
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  install: install,
+  component: _VueSlideTab_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+});
 
 /***/ })
 
