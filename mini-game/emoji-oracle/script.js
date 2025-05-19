@@ -28,34 +28,6 @@ function createParticles() {
   return container;
 }
 
-function triggerTimeStop() {
-  const effect = document.createElement("div");
-  effect.className = "time-stop";
-
-  // 添加裂纹层
-  const cracks = document.createElement("div");
-  cracks.className = "cracks";
-
-  // 添加文字
-  const text = document.createElement("div");
-  text.className = "time-stop-text";
-  text.textContent = "時よ止まれ！";
-
-  // 添加粒子
-  const particles = createParticles();
-
-  effect.appendChild(cracks);
-  effect.appendChild(text);
-  effect.appendChild(particles);
-  document.body.appendChild(effect);
-
-  // 5秒后移除效果
-  setTimeout(() => effect.remove(), 5000);
-
-  // 添加音效（需要准备音频文件）
-  new Audio("./skill.mp3").play();
-}
-
 const correctSequence = [
   "ArrowUp",
   "ArrowUp",
@@ -86,6 +58,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const gameContainerEl = document.getElementById("game-container");
   const hellButton = document.getElementById("hell-btn");
   const audioEl = document.getElementById("bg");
+  const jojoEl = document.getElementById("jojo-audio");
 
   // --- Game Data ---
   const riddles = [
@@ -235,7 +208,31 @@ document.addEventListener("DOMContentLoaded", () => {
   function theWorld() {
     stopTheTime = true;
     audioEl.pause();
-    triggerTimeStop();
+    jojoEl.play();
+
+    const effect = document.createElement("div");
+    effect.className = "time-stop";
+
+    // 添加裂纹层
+    const cracks = document.createElement("div");
+    cracks.className = "cracks";
+
+    // 添加文字
+    const text = document.createElement("div");
+    text.className = "time-stop-text";
+    text.textContent = "時よ止まれ！";
+
+    // 添加粒子
+    const particles = createParticles();
+
+    effect.appendChild(cracks);
+    effect.appendChild(text);
+    effect.appendChild(particles);
+    document.body.appendChild(effect);
+
+    // 5秒后移除效果
+    setTimeout(() => effect.remove(), 5000);
+
     setTimeout(() => {
       stopTheTime = false;
       if (hellMode) {
