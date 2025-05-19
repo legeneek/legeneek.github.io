@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Emoji Oracle's Whimsy</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div id="skill"><button id="the-world">The World</button></div>
+    <button id="hell-btn" class="fire-btn">
+      <span>地狱难度</span>
+      <audio id="bg" loop src="./The_Oracle_Speaks.mp3"></audio>
+    </button>
+    <div id="header">求赞</div>
+    <div id="game-container">
+      <h1>表情先知的谜题</h1>
+
+      <div id="oracle-area">
+        <div id="oracle-reaction">🔮</div>
+        <div id="riddle-display">🤔 + 🤔</div>
+      </div>
+
+      <div id="options-area">
+        <!-- Options will be populated by JavaScript -->
+      </div>
+
+      <div id="info-area">
+        <p>Score: <span id="score">0</span></p>
+        <p>Time Left: <span id="timer">10</span>s</p>
+        <p>Lives: <span id="lives">3</span></p>
+        <p>Streak: <span id="streak">0</span></p>
+      </div>
+
+      <div id="message-area">
+        <p id="message-text">Click "Start Game" to begin!</p>
+        <button id="start-button">Start Game</button>
+      </div>
+
+      <div id="game-over-screen" class="hidden">
+        <h2>Game Over!</h2>
+        <p>Final Score: <span id="final-score">0</span></p>
+        <button id="restart-button">Play Again?</button>
+      </div>
+    </div>
+
+    <script src="./script.js"></script>
+    <script>
+      const directions = [
+        "up",
+        "up",
+        "down",
+        "down",
+        "left",
+        "right",
+        "left",
+        "right",
+      ];
+
+      function getRotation(direction) {
+        switch (direction) {
+          case "up":
+            return 0;
+          case "down":
+            return 180;
+          case "left":
+            return -90;
+          case "right":
+            return 90;
+          default:
+            return 0;
+        }
+      }
+
+      function getRandomPosition(containerRect) {
+        const size = 30;
+        const maxX = containerRect.width - size;
+        const maxY = containerRect.height - size;
+        return {
+          left: Math.random() * maxX,
+          top: Math.random() * maxY,
+        };
+      }
+
+      function createThumb(direction, containerRect) {
+        const thumb = document.createElement("div");
+        thumb.className = "thumb";
+        thumb.textContent = "👍";
+
+        // 设置旋转角度
+        thumb.style.transform = `rotate(${getRotation(direction)}deg)`;
+
+        // 获取随机位置
+        const pos = getRandomPosition(containerRect);
+        thumb.style.left = `${pos.left}px`;
+        thumb.style.top = `${pos.top}px`;
+        thumb.style.opacity = "0";
+
+        // 添加到DOM
+        document.getElementById("header").appendChild(thumb);
+
+        // 触发重排以播放动画
+        void thumb.offsetWidth;
+        thumb.style.opacity = "1";
+
+        // 淡出并移除元素
+        setTimeout(() => {
+          thumb.style.opacity = "0";
+          setTimeout(() => {
+            if (thumb.parentNode) {
+              thumb.parentNode.removeChild(thumb);
+            }
+          }, 500);
+        }, 1000);
+      }
+
+      // 动画循环控制器
+      function startAnimation() {
+        const headerRect = document
+          .getElementById("header")
+          .getBoundingClientRect();
+        let index = 0;
+
+        setInterval(() => {
+          createThumb(directions[index], headerRect);
+          index = (index + 1) % directions.length;
+        }, 3000);
+      }
+
+      // 启动动画
+      startAnimation();
+    </script>
+  </body>
+</html>

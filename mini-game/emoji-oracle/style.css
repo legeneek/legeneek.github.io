@@ -1,0 +1,352 @@
+body {
+  font-family: 'Segoe UI Emoji', 'Apple Color Emoji', 'Noto Color Emoji', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f0f0f0;
+  margin: 0;
+  color: #333;
+  user-select: none; /* Prevents text selection during fast clicking */
+}
+
+.time-stop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  animation: timeStop 5s linear forwards;
+}
+
+@keyframes timeStop {
+  0% {
+    backdrop-filter: grayscale(0) brightness(1);
+    opacity: 0;
+  }
+  20% {
+    backdrop-filter: grayscale(1) brightness(2);
+    opacity: 1;
+  }
+  80% {
+    backdrop-filter: grayscale(0) brightness(2);
+    opacity: 1;
+  }
+  100% {
+    backdrop-filter: grayscale(1) brightness(1);
+    opacity: 0;
+  }
+}
+
+/* 裂纹效果 */
+.cracks {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: 
+    repeating-linear-gradient(45deg, 
+      transparent 0px,
+      transparent 2px,
+      rgba(255,255,255,0.3) 2px,
+      rgba(255,255,255,0.3) 4px
+    );
+  animation: crack 0.5s linear infinite;
+}
+
+/* 文字效果 */
+.time-stop-text {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Arial Black', sans-serif;
+  font-size: 5em;
+  color: #fff;
+  text-shadow: 0 0 10px #00ffff;
+  animation: textPulse 1s ease-in-out infinite;
+  opacity: 0;
+  animation-delay: 0.5s;
+}
+
+@keyframes crack {
+  from { transform: scale(1); }
+  to { transform: scale(1.1); }
+}
+
+ @keyframes textPulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+} 
+
+.particles {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.particle {
+  position: absolute;
+  width: 8px;  /* 增大尺寸 */
+  height: 8px;
+  background: rgba(255, 215, 0, 0.8); /* 改为金色 */
+  border-radius: 50%;
+  animation: particle 2s ease-out infinite;
+  filter: drop-shadow(0 0 5px #ffd700); /* 添加光晕 */
+}
+
+@keyframes particle {
+  0% {
+    transform: translate(0, 100vh) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: 
+      translate(
+        calc(-50vw + (var(--x) * 100vw)),  /* X轴随机偏移 */
+        calc(-100vh + (var(--y) * 50vh))   /* Y轴动态调整 */
+      ) 
+      scale(0);
+    opacity: 0;
+  }
+}
+
+#skill {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  font-size: 1em;
+}
+
+#the-world {
+  padding: 10px 20px;
+  background-color: #0f0082;
+  border-radius: 8px;
+  color: #fff;
+}
+
+#game-container {
+  background-color: #fff;
+  padding: 20px 30px;
+  border-radius: 15px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  text-align: center;
+  width: 90%;
+  max-width: 500px;
+}
+
+h1 {
+  color: #6a0dad; /* Purple */
+  margin-bottom: 20px;
+}
+
+#oracle-area {
+  margin-bottom: 25px;
+  background-color: #e6e6fa; /* Lavender */
+  padding: 15px;
+  border-radius: 10px;
+}
+
+#oracle-reaction {
+  font-size: 3em;
+  margin-bottom: 10px;
+  transition: transform 0.2s ease-in-out;
+}
+
+#riddle-display {
+  font-size: 2em;
+  color: #4b0082; /* Indigo */
+  min-height: 1.5em; /* Ensure space even when empty */
+}
+
+#options-area {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-bottom: 25px;
+  min-height: 70px; /* Ensure space for options */
+}
+
+.option-button {
+  font-size: 2.5em;
+  padding: 10px 15px;
+  border: 2px solid #dda0dd; /* Plum */
+  border-radius: 10px;
+  background-color: #fff;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.option-button:hover {
+  background-color: #f5e6ff; /* Light lavender */
+  transform: scale(1.1);
+}
+
+.option-button:active {
+  transform: scale(0.95);
+}
+
+#info-area {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+  font-size: 0.9em;
+  color: #555;
+}
+
+#info-area p {
+  margin: 0 5px;
+  background-color: #f9f9f9;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+#message-area {
+  margin-top: 20px;
+}
+
+#message-text {
+  min-height: 1.5em; /* Prevent layout shift */
+  font-style: italic;
+  color: #777;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 1em;
+  color: #fff;
+  background-color: #8a2be2; /* BlueViolet */
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+button:hover {
+  background-color: #7b1fa2; /* Darker BlueViolet */
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* Feedback animations */
+.correct-flash {
+  animation: flash-green 0.5s;
+}
+@keyframes flash-green {
+  0% { background-color: #fff; }
+  50% { background-color: #90ee90; } /* LightGreen */
+  100% { background-color: #fff; }
+}
+
+.incorrect-flash {
+  animation: flash-red 0.5s;
+}
+@keyframes flash-red {
+  0% { background-color: #fff; }
+  50% { background-color: #ffcccb; } /* LightCoral */
+  100% { background-color: #fff; }
+}
+
+.fire-btn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 10px 20px;
+  font-size: 1em;
+  color: #fff;
+  background: #ff5722;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.5s;
+  overflow: hidden;
+}
+
+.fire-btn audio {
+  display: none;
+}
+
+.fire-btn::before {
+  content: '';
+  position: absolute;
+  top: -20px;
+  left: -40px;
+  width: 200%;
+  height: 150%;
+  background: linear-gradient(
+      90deg,
+      transparent,
+      #ff6b00,
+      #ff2200,
+      #ff6b00,
+      transparent
+  );
+  animation: flame 4s linear infinite;
+  filter: blur(10px);
+  transform: rotate(45deg);
+}
+
+.fire-btn::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+      90deg,
+      #ff5722,
+      #ff3300,
+      #ff5722
+  );
+  z-index: -1;
+}
+
+@keyframes flame {
+  0% {
+      transform: rotate(45deg) translateX(-50%);
+  }
+  100% {
+      transform: rotate(45deg) translateX(50%);
+  }
+}
+
+.fire-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 30px #ff4400;
+}
+
+.fire-btn:hover::before {
+  animation-duration: 1.5s;
+}
+
+.fire-btn span {
+  position: relative;
+  z-index: 1;
+}
+
+#header {
+  position: absolute;
+  top: 0;
+  z-index: -1;
+  width: 500px;
+  height: 100px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.thumb {
+  position: absolute;
+  font-size: 30px;
+  width: 30px;
+  height: 30px;
+  transition: all 0.5s ease;
+  transform-origin: center center;
+  pointer-events: none;
+}
