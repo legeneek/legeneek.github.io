@@ -1,0 +1,410 @@
+body {
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #333;
+    color: white;
+    margin: 0;
+    overflow: hidden; /* Prevent scrollbars from temporary large elements */
+    background: url('./bg.png');
+    background-size: cover;
+}
+
+#game-board {
+    display: flex;
+    flex-direction: column;
+    width: 90vw;
+    max-width: 1000px;
+    height: 90vh;
+    max-height: 700px;
+    background-color: #4a3b2a; /* Wooden table color */
+    border: 5px solid #2c2013;
+    border-radius: 10px;
+    position: relative;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.player-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+#ai-area {
+    border-bottom: 2px dashed #2c2013;
+}
+
+.hero-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    justify-content: space-around; /* Spread out hero info elements */
+}
+
+.hero-portrait {
+    width: 60px;
+    height: 60px;
+    background-color: #777;
+    border: 2px solid #555;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 12px;
+}
+#player-hero-portrait { background-color: #4a7a9c; } /* Jaina Blue */
+#ai-hero-portrait { background-color: #9c4a4a; } /* Reddish for AI */
+
+
+.hero-stats {
+    font-size: 14px;
+}
+
+.mana-crystals {
+    display: flex;
+}
+
+.mana-crystal {
+    width: 15px;
+    height: 15px;
+    background-color: #ddd; /* Empty */
+    border: 1px solid #aaa;
+    border-radius: 3px;
+    margin-right: 3px;
+    transition: background-color 0.3s ease;
+}
+.mana-crystal.full {
+    background-color: #69d2ff; /* Full mana blue */
+}
+.mana-crystal.used {
+    background-color: #3c6b8e; /* Used mana dark blue */
+}
+
+
+.hand {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end; /* Cards originate from bottom for player */
+    min-height: 90px; /* Increased min-height for better card visibility */
+    position: relative; /* For card animations */
+    gap: 5px; /* Spacing between cards */
+}
+
+#ai-area .hand {
+    align-items: flex-start; /* AI cards originate from top */
+}
+
+
+.battlefield {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    min-height: 100px; /* Increased min-height */
+    background: url('./field.png');
+    background-size: cover;
+    border-radius: 5px;
+    margin: 5px 0;
+    gap: 10px; /* Spacing between minions */
+}
+
+.card, .minion-card {
+    width: 60px;
+    height: 85px;
+    background-color: #a0a0a0; /* Default card color */
+    border: 2px solid #333;
+    border-radius: 5px;
+    padding: 3px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 9px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+    position: relative; /* For absolute positioned stats */
+    overflow: hidden; /* Hide text overflow */
+}
+
+.card:hover, .minion-card:hover {
+    transform: scale(1.1) translateY(-5px);
+    box-shadow: 0 0 15px rgba(255, 255, 100, 0.7);
+}
+
+.minion-card.can-attack {
+    border-color: #77dd77; /* Green border for minions that can attack */
+    box-shadow: 0 0 10px #77dd77;
+}
+
+.card.playable {
+    border-color: yellow;
+    box-shadow: 0 0 10px yellow;
+}
+
+.card-cost, .minion-cost {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    background-color: #367db0;
+    color: white;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 10px;
+}
+
+.card-name, .minion-name {
+    font-weight: bold;
+    margin-top: 20px; /* Space for cost */
+    font-size: 10px;
+}
+
+.card-type {
+    font-style: italic;
+    font-size: 8px;
+}
+
+.minion-stats {
+    position: absolute;
+    bottom: 2px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.minion-attack {
+    position: absolute;
+    bottom: 2px;
+    left: 2px;
+    background-color: #f0ad4e; /* Attack yellow */
+    color: black;
+    padding: 1px 3px;
+    border-radius: 3px;
+    font-weight: bold;
+}
+
+.minion-health {
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+    background-color: #d9534f; /* Health red */
+    color: white;
+    padding: 1px 3px;
+    border-radius: 3px;
+    font-weight: bold;
+}
+.minion-health.damaged {
+    color: #ffdddd; /* Lighter red for damaged health text, if needed */
+}
+
+
+.card-back {
+    width: 60px;
+    height: 85px;
+    background-color: #5c3c1a; /* Hearthstone card back brown */
+    border: 2px solid #3b2a15;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+
+#end-turn-button {
+    position: absolute;
+    bottom: 50%;
+    right: 20px;
+    transform: translateY(50%);
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+#end-turn-button:hover {
+    background-color: #45a049;
+}
+#end-turn-button:disabled {
+    background-color: #aaa;
+    cursor: not-allowed;
+}
+
+#game-message {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0,0,0,0.7);
+    padding: 15px;
+    border-radius: 5px;
+    font-size: 18px;
+    z-index: 100;
+    display: none; /* Initially hidden */
+}
+
+#game-over-message {
+    position: fixed; /* Full screen overlay */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.85);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 32px;
+    z-index: 200;
+}
+#game-over-message button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 18px;
+}
+
+/* Target selection styling */
+.targetable {
+    box-shadow: 0 0 15px 5px #00ff00 !important; /* Bright green glow */
+    cursor: crosshair;
+}
+.selected-attacker {
+    box-shadow: 0 0 15px 5px #ffcc00 !important; /* Bright yellow glow */
+}
+
+
+/* Animation for drawing card */
+.drawing-card {
+    animation: drawCardAnimation 0.5s ease-out forwards;
+}
+@keyframes drawCardAnimation {
+    from {
+        transform: translateY(50px) scale(0.5);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+}
+#ai-area .drawing-card { /* AI draws from top */
+     animation: drawCardAnimationAi 0.5s ease-out forwards;
+}
+@keyframes drawCardAnimationAi {
+     from {
+        transform: translateY(-50px) scale(0.5);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+}
+
+
+/* Animation for playing minion */
+.playing-minion {
+    animation: playMinionAnimation 0.5s ease-out forwards;
+}
+@keyframes playMinionAnimation {
+    from {
+        transform: scale(1.5);
+        opacity: 0.5;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Attack animation hint (line) */
+#attack-line {
+    position: absolute;
+    border: 2px solid red;
+    background-color: rgba(255,0,0,0.5);
+    z-index: 50;
+    pointer-events: none; /* So it doesn't interfere with clicks */
+    transform-origin: 0 50%;
+}
+
+/* Damage popup */
+.damage-popup {
+    position: absolute;
+    font-size: 24px;
+    font-weight: bold;
+    color: red;
+    animation: damagePopupAnimation 1s forwards;
+    pointer-events: none;
+    z-index: 150;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000; /* Black outline */
+}
+@keyframes damagePopupAnimation {
+    0% { transform: translateY(0) scale(1); opacity: 1; }
+    100% { transform: translateY(-40px) scale(1.5); opacity: 0; }
+}
+
+#card-tooltip {
+    position: absolute;
+    width: 120px; /* Larger for tooltip */
+    height: 170px;
+    background-color: #c0c0c0;
+    border: 3px solid #555;
+    border-radius: 10px;
+    padding: 5px;
+    z-index: 300; /* On top of everything */
+    pointer-events: none; /* Don't intercept mouse events */
+    font-size: 11px;
+    line-height: 1.2;
+    box-shadow: 5px 5px 15px rgba(0,0,0,0.5);
+}
+#card-tooltip .card-cost { font-size: 14px; width: 24px; height: 24px;}
+#card-tooltip .card-name { font-size: 14px; margin-top: 28px; }
+#card-tooltip .card-type { font-size: 10px; }
+#card-tooltip .card-text { margin-top: 8px; font-size: 10px; text-align: left; padding: 0 5px;}
+#card-tooltip .minion-attack { font-size: 14px; padding: 2px 5px;}
+#card-tooltip .minion-health { font-size: 14px; padding: 2px 5px;}
+
+/* Add this to your style.css */
+.player-area.active-turn {
+    box-shadow: 0 0 20px 7px gold inset, 0 0 15px 3px gold; /* Inset and outer glow */
+    border: 3px solid gold !important; /* Ensure it overrides other borders */
+    background-color: rgba(74, 59, 42, 0.5); /* Slightly darker version of board to contrast */
+}
+
+#ai-area.active-turn .hero-info,
+#player-area.active-turn .hero-info {
+    background-color: rgba(255, 215, 0, 0.15); /* Slight gold tint for hero info bar of active player */
+    border-radius: 5px;
+}
+
+/* Make End Turn button more obvious when it's player's turn */
+#end-turn-button:not(:disabled) {
+    background-color: #28a745; /* Brighter Green */
+    animation: pulseButton 1.5s infinite;
+}
+
+@keyframes pulseButton {
+    0% { transform: translateY(50%) scale(1); }
+    50% { transform: translateY(50%) scale(1.05); }
+    100% { transform: translateY(50%) scale(1); }
+}
