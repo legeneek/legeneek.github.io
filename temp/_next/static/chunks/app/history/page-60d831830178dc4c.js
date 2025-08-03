@@ -1,1 +1,0 @@
-(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[429],{6899:(e,r,s)=>{Promise.resolve().then(s.bind(s,7966))},7966:(e,r,s)=>{"use strict";s.r(r),s.d(r,{default:()=>i});var n=s(5155);function i(){return(0,n.jsx)("div",{children:"history"})}}},e=>{var r=r=>e(e.s=r);e.O(0,[441,684,358],()=>r(6899)),_N_E=e.O()}]);
